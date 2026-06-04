@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusQA</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/views.css">
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ══════════════════════════
+       SIDEBAR
+  ══════════════════════════ -->
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+          <rect x="9" y="3" width="6" height="4" rx="1"/>
+          <path d="M9 12h6M9 16h4"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">NexusQA</div>
+        <div class="brand-sub">V 1.0</div>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Navigation</div>
+
+      <div class="nav-item active" id="nav-dashboard" onclick="navigate('dashboard')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Dashboard
+      </div>
+
+      <div class="nav-item" id="nav-new" onclick="navigate('new')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+        New Story
+      </div>
+
+      <div class="nav-item" id="nav-export-all" onclick="navigate('export-all')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Export All
+      </div>
+    </div>
+
+    <div class="nav-section" style="flex:1;display:flex;flex-direction:column;min-height:0">
+      <div class="nav-label">
+        Stories
+        <span id="story-count-label"
+              style="font-family:'Roboto Mono',monospace;font-weight:600;
+                     color:var(--accent);margin-left:4px">0</span>
+      </div>
+      <div class="story-list-sidebar" id="sidebar-story-list">
+        <p style="font-size:11px;color:var(--text3);padding:4px 6px">No test stories yet</p>
+      </div>
+    </div>
+
+  </aside>
+
+
+  <!-- ══════════════════════════
+       MAIN
+  ══════════════════════════ -->
+  <div class="main">
+
+    <div class="topbar">
+      <div class="page-title" id="topbar-title">Dashboard</div>
+      <div class="topbar-actions" id="topbar-actions">
+        <button class="btn btn-primary btn-sm" onclick="navigate('new')">New Story</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ──────────────────────
+           VIEW: DASHBOARD
+      ────────────────────── -->
+      <div class="view active" id="view-dashboard">
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="s-total" style="color:var(--accent)">0</div>
+            <div class="stat-label">Total Stories</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="s-pass" style="color:var(--green)">0</div>
+            <div class="stat-label">Passed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="s-fail" style="color:var(--red)">0</div>
+            <div class="stat-label">Failed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="s-pend" style="color:var(--amber)">0</div>
+            <div class="stat-label">Pending</div>
+          </div>
+        </div>
+
+        <div class="stories-table">
+          <div class="table-head">
+            <span>Title / ID</span>
+            <span>Status</span>
+            <span>Module</span>
+            <span>Priority</span>
+            <span>Actions</span>
+          </div>
+          <div id="table-body"></div>
+        </div>
+
+      </div>
+
+
+      <!-- ──────────────────────
+           VIEW: NEW / EDIT
+      ────────────────────── -->
+      <div class="view" id="view-new">
+        <form onsubmit="saveStory(event)">
+
+          <!-- General Info -->
+          <div class="form-card">
+            <div class="form-section-title">General Information</div>
+            <div class="form-grid">
+
+              <div class="form-group full">
+                <label>Story Title *</label>
+                <input type="text" id="f-title"
+                       placeholder="e.g. Login with valid credentials" required>
+              </div>
+
+              <div class="form-group">
+                <label>Test ID</label>
+                <input type="text" id="f-id" placeholder="e.g. TC-001">
+              </div>
+              <div class="form-group">
+                <label>Module / Feature</label>
+                <input type="text" id="f-module" placeholder="e.g. Authentication">
+              </div>
+
+              <div class="form-group">
+                <label>Version</label>
+                <input type="text" id="f-version" placeholder="e.g. 2.1.0">
+              </div>
+              <div class="form-group">
+                <label>Test Date</label>
+                <input type="date" id="f-date">
+              </div>
+
+              <div class="form-group">
+                <label>Priority</label>
+                <select id="f-priority">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select id="f-status">
+                  <option value="new">Pending</option>
+                  <option value="pass">Pass</option>
+                  <option value="fail">Fail</option>
+                  <option value="blocked">Blocked</option>
+                </select>
+              </div>
+
+              <div class="form-group full">
+                <label>Tester</label>
+                <input type="text" id="f-tester" placeholder="Responsible QA name">
+              </div>
+              <div class="form-group full">
+                <label>Description</label>
+                <textarea id="f-desc"
+                          placeholder="Describe the context, objective and scope of the test..."></textarea>
+              </div>
+              <div class="form-group full">
+                <label>Preconditions</label>
+                <textarea id="f-pre"
+                          placeholder="What conditions must be met before executing this test..."></textarea>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Test Steps -->
+          <div class="form-card">
+            <div class="form-section-title">Test Steps</div>
+            <div id="steps-area"></div>
+            <button type="button"
+                    class="btn btn-ghost btn-sm"
+                    style="margin-top:10px"
+                    onclick="addStep()">
+              + Add Step
+            </button>
+          </div>
+
+          <!-- Acceptance Criteria -->
+          <div class="form-card">
+            <div class="form-section-title">Acceptance Criteria</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Expected Result</label>
+                <textarea id="f-expected"
+                          placeholder="What should happen when following the steps correctly..."></textarea>
+              </div>
+              <div class="form-group full">
+                <label>Actual Result</label>
+                <textarea id="f-obtained"
+                          placeholder="What actually happened during the test..."></textarea>
+              </div>
+              <div class="form-group full">
+                <label>Observations / Bugs Found</label>
+                <textarea id="f-notes"
+                          placeholder="Bug details, additional notes, ticket links..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evidence -->
+          <div class="form-card">
+            <div class="form-section-title">Test Evidence</div>
+            <div class="evidence-grid" id="evidence-grid" style="margin-bottom:12px"></div>
+            <label class="upload-zone" for="evidence-input">
+              <div class="upload-zone-title">Click or drag images here</div>
+              <div class="upload-zone-sub">PNG, JPG, GIF, WEBP</div>
+            </label>
+            <input type="file" id="evidence-input"
+                   accept="image/*" multiple style="display:none"
+                   onchange="handleEvidenceUpload(event)">
+          </div>
+
+          <div style="display:flex;gap:8px;justify-content:flex-end;padding-bottom:8px">
+            <button type="button" class="btn btn-ghost"
+                    onclick="navigate('dashboard')">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="save-btn">Save Story</button>
+          </div>
+
+        </form>
+      </div>
+
+
+      <!-- ──────────────────────
+           VIEW: DETAIL
+      ────────────────────── -->
+      <div class="view" id="view-detail">
+        <div id="detail-content"></div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+
+</div><!-- /shell -->
+
+<!-- Off-screen PDF render target -->
+<div id="pdf-render-area"></div>
+
+<!-- Scripts — dependency order -->
+<script src="js/state.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/form.js"></script>
+<script src="js/detail.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/navigation.js"></script>
+<script>
+  renderSidebar();
+  renderDashboard();
+  navigate('dashboard');
+</script>
+
+</body>
+</html>
