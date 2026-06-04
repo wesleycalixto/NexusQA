@@ -18,14 +18,14 @@
 * **A Solução:** O **NexusQA** elimina o trabalho manual de layout. Através de um formulário inteligente e dinâmico, você apenas insere os dados técnicos essenciais. O sistema processa esses inputs e gera automaticamente um relatório padronizado, limpo, de altíssimo nível visual e pronto para o consumo dos desenvolvedores.
 
 ## 🔄 Funcionalidades
-Criação e edição de histórias de teste com campos estruturados
-Passos de execução numerados e editáveis
-Upload de evidências por imagem (PNG, JPG, GIF, WEBP)
-Status por história: Pending, Pass, Fail, Blocked
-Prioridade: Low, Medium, High
-Dashboard com contadores por status
-Exportação em PDF — história individual ou todas de uma vez
-Persistência local via localStorage (sem backend)
+- Criação e edição de histórias de teste com campos estruturados
+- Passos de execução numerados e editáveis
+- Upload de evidências por imagem (PNG, JPG, GIF, WEBP)
+- Status por história: Pending, Pass, Fail, Blocked
+- Prioridade: Low, Medium, High
+- Dashboard com contadores por status
+- Exportação em PDF — história individual ou todas de uma vez
+- Persistência local via `localStorage` (sem backend)
 
 👾Dependências externas
 | Biblioteca | Versão | Uso |
