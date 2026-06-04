@@ -17,4 +17,20 @@
 * **O Problema:** Profissionais de QA gastam tempo precioso formatando documentos, organizando prints e estruturando logs manualmente. Relatórios sem padrão geram ruído, atrasam o entendimento do time de desenvolvimento e dificultam a correção de falhas.
 * **A Solução:** O **NexusQA** elimina o trabalho manual de layout. Através de um formulário inteligente e dinâmico, você apenas insere os dados técnicos essenciais. O sistema processa esses inputs e gera automaticamente um relatório padronizado, limpo, de altíssimo nível visual e pronto para o consumo dos desenvolvedores.
 
-## 🔄 Fluxo de Funcionamento
+## 🔄 Funcionalidades
+Criação e edição de histórias de teste com campos estruturados
+Passos de execução numerados e editáveis
+Upload de evidências por imagem (PNG, JPG, GIF, WEBP)
+Status por história: Pending, Pass, Fail, Blocked
+Prioridade: Low, Medium, High
+Dashboard com contadores por status
+Exportação em PDF — história individual ou todas de uma vez
+Persistência local via localStorage (sem backend)
+
+👾Dependências externas
+Biblioteca  Versão    Uso
+
+jsPDF       2.5.1    Geração do arquivo PDF
+html2canvas 1.4.1    Renderização do HTML para canvas antes do PDF
+Inter         —      Fonte principal da UI
+Roboto Mono   —      Fonte monoespaçada para IDs, índices e código
