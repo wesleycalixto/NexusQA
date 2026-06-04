@@ -28,9 +28,9 @@ Exportação em PDF — história individual ou todas de uma vez
 Persistência local via localStorage (sem backend)
 
 👾Dependências externas
-Biblioteca  Versão    Uso
-
-jsPDF       2.5.1    Geração do arquivo PDF
-html2canvas 1.4.1    Renderização do HTML para canvas antes do PDF
-Inter         —      Fonte principal da UI
-Roboto Mono   —      Fonte monoespaçada para IDs, índices e código
+| Biblioteca | Versão | Uso |
+|---|---|---|
+| [jsPDF](https://github.com/parallax/jsPDF) | 2.5.1 | Geração do arquivo PDF |
+| [html2canvas](https://html2canvas.hertzen.com) | 1.4.1 | Renderização do HTML para canvas antes do PDF |
+| [Inter](https://fonts.google.com/specimen/Inter) | — | Fonte principal da UI |
+| [Roboto Mono](https://fonts.google.com/specimen/Roboto+Mono) | — | Fonte monoespaçada para IDs, índices e código |
